@@ -1,12 +1,8 @@
 import React from "react";
-// import classNames from "classnames";
-
 
 
 export default function Empty(props) {
-  // const headerClass = classNames("appointment",
-  //  {"appointment__time": props.time})
-  
+   
   return (
     <main className="appointment__add">
       <img
