@@ -42,6 +42,7 @@
     "babel-loader": "^8.0.5",
     "node-sass": "^4.11.0"
   },
+  "proxy": "http://localhost:8001",
   "jest": {
     "watchPathIgnorePatterns": [
       "<rootDir>/node_modules/",
