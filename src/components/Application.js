@@ -4,57 +4,9 @@ import DayList from "components/DayList"
 import axios from "axios"
 import "components/Appointment"
 import Appointment from "components/Appointment";
-import {getAppointmentsForDay} from "../helpers/selectors"
+import {getAppointmentsForDay, getInterview} from "../helpers/selectors"
 
-// const appointments = [
-//   {
-//     id: 1,
-//     time: "12pm",
-//   },
-//   {
-//     id: 2,
-//     time: "1pm",
-//     interview: {
-//       student: "Lydia Miller-Jones",
-//       interviewer: {
-//         id: 1,
-//         name: "Sylvia Palmer",
-//         avatar: "https://i.imgur.com/LpaY82x.png",
-//       }
-//     }
-//   },
 
-//   {
-//     id: 3,
-//     time: "2pm",
-//   },
-//   {
-//     id: 4,
-//     time: "3pm",
-//     interview: {
-//       student: "Archie Cohen",
-//       interviewer: {
-//         id: 2,
-//         name: "Tori Malcolm",
-//         avatar: "https://i.imgur.com/Nmx0Qxo.png",
-//       }
-//     }
-//   },
-
-//   {
-//     id: 5,
-//     time: "4pm",
-//     interview: {
-//       student: "Maria Boucher",
-//       interviewer: {
-//         id: 5,
-//         name: "Sven Jones",
-//         avatar: "https://i.imgur.com/twYrpay.jpg",
-//       }
-//     }
-//   }
-
-// ];
 
 
 export default function Application(props) {
@@ -83,15 +35,11 @@ export default function Application(props) {
 
     const first = axios.get(`/api/days`);
     const second = axios.get(`/api/appointments`);
+    const third = axios.get(`/api/interviewers`);
 
-    Promise.all([first, second])
+    Promise.all([first, second, third])
       .then((arrOfValues) => {
-        // const [daysData, appointmentsData] = arrOfValues;
-        // console.log(appointmentsData);
-        // console.log(daysData);
-        // setDay(daysData.data);
-        // setAppointments(appointmentsData.data);
-        setState(init => ({...init, days: arrOfValues[0].data, appointments: arrOfValues[1].data}))
+        setState(init => ({...init, days: arrOfValues[0].data, appointments: arrOfValues[1].data, interviewers: arrOfValues[2].data}))
       })
 
 
@@ -99,8 +47,9 @@ export default function Application(props) {
 
 
   }, [])
-
-  const schedule = getAppointmentsForDay(state, state.day).map(appointment => {
+  const appointments = getAppointmentsForDay(state, state.day);
+  const schedule = appointments.map(appointment => {
+    const interview = getInterview(state, appointment.interview);
     return (
       <Appointment key={appointment.id} id={appointment.id} time={appointment.time} interview={appointment.interview} />
     )
