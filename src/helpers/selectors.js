@@ -27,16 +27,30 @@ export function getAppointmentsForDay(state, day) {
 
 
 export function getInterview(state, interview) {
-  console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.", interview)
-
-  // const theInterview = state.interviews.find( i => i.interviewers === interview)
-  // console.log("zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz", theInterview)
-  // // [4,5,6]
+  // console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.", interview)
   if(!interview){
     return null
   }
-  console.log(state.interviewers)
+  // console.log(state.interviewers)
   const interviewer = state.interviewers[interview.interviewer]
-  console.log(interviewer)
+  // console.log(interviewer)
   return {...interview, interviewer}
+};
+
+
+export function getAInterviewersForDay(state, day) {
+  console.log("......................................................................", state.days)
+
+  const theDay = state.days.find( d => d.name === day)
+  // [4,5,6]
+  if(!theDay){
+    return []
+  }
+  const result = []
+  for(const interviewerId of theDay.interviewers){
+    result.push(state.interviewers[interviewerId])
+  }
+  // console.log(result)
+  return result
+  
 };
