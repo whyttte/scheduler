@@ -1,75 +1,40 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import "components/Application.scss";
 import DayList from "components/DayList"
-import axios from "axios"
-import "components/Appointment"
+import "components/Appointment";
 import Appointment from "components/Appointment";
-import {getAppointmentsForDay, getInterview, getInterviewersForDay} from "../helpers/selectors"
+import {getAppointmentsForDay, getInterview, getInterviewersForDay} from "../helpers/selectors";
+import useApplicationData from "../hooks/useApplicationData";
 
 
 
 
 export default function Application(props) {
 
-  const [state, setState] = useState({
-    day: "Monday",
-    days: [],
-    appointments: {},
-    interviewers: []
-  });
+  const {
+    state,
+    setDay,
+    bookInterview,
+    cancelInterview
+  } = useApplicationData();
   
-  const setDay = day => ({...setState, day})
-
-  const bookInterview = function(id, interview) {
-    console.log(id, interview);
-    const appointment = {
-      ...state.appointments[id],
-      interview: { ...interview }
-    };
-
-    const appointments = {
-      ...state.appointments,
-      [id]: appointment
-    };
-    
-    return axios
-      .put(`api/appointments/${id}`, {appointment})
-      .then(() => setState({...state, appointments}))
-  }
-  
-
-
-
-  useEffect(() => {
-
-    const first = axios.get(`/api/days`);
-    const second = axios.get(`/api/appointments`);
-    const third = axios.get(`/api/interviewers`);
-
-    Promise.all([first, second, third])
-      .then((arrOfValues) => {
-        setState(init => ({...init, days: arrOfValues[0].data, appointments: arrOfValues[1].data, interviewers: arrOfValues[2].data}))
-      })
-
-
-  }, [])
-
   
   const appointments = getAppointmentsForDay(state, state.day);
   const interviewers = getInterviewersForDay(state, state.day)
   const schedule = appointments.map(appointment => {
-    const interview = getInterview(state, appointment.interview);
     
     return (
       <Appointment 
         key={appointment.id} 
         id={appointment.id} 
         time={appointment.time} 
-        interview={appointment.interview} 
+        interview={getInterview(state, appointment.interview)} 
         interviewers = {interviewers} 
-        bookInterview={bookInterview} />
-    )
-  })
+        bookInterview={bookInterview}
+        cancelInterview={cancelInterview} 
+      />
+    );
+  });
   return (
     <main className="layout">
       <section className="sidebar">
