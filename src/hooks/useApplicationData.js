@@ -9,7 +9,7 @@ export default function useApplicationData(initial) {
     interviewers: []
   });
 
-  const setDay = day => ({...setState, day});
+  const setDay = day => setState({...state, day});
 
   const bookInterview = function(id, interview) {
     const appointment = {
@@ -21,9 +21,10 @@ export default function useApplicationData(initial) {
       ...state.appointments,
       [id]: appointment
     };
-    
+    console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXx", interview)
     return axios
-      .put(`api/appointments/${id}`, {interview})
+
+      .put(`http://localhost:8001/api/appointments/${id}`, {interview})
       .then(() => setState({...state, appointments}))
   };
 
@@ -51,6 +52,7 @@ export default function useApplicationData(initial) {
 
     Promise.all([first, second, third])
       .then((arrOfValues) => {
+        console.log(".......................................................", arrOfValues)
         setState(init => ({...init, days: arrOfValues[0].data, appointments: arrOfValues[1].data, interviewers: arrOfValues[2].data}))
       })
 

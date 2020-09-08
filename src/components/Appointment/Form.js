@@ -17,6 +17,12 @@ export default function Form(props) {
     props.onCancel();
   }
 
+  const save = function (event) {
+    event.preventDefault();
+    console.log("nnnnnnnnnnn", name, interviewer)
+    props.onSave(name, interviewer)
+  }
+
   
   return (
     <main className="appointment__card appointment__card--create">
@@ -46,7 +52,7 @@ export default function Form(props) {
           <Button danger onClick={props.onCancel}>
           Cancel 
         </Button>
-        <Button confirm onClick={props.onSave}>
+        <Button confirm onClick={save}>
           Save  
         </Button>
         </section>
