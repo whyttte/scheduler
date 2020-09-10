@@ -1,9 +1,7 @@
 
 export function getAppointmentsForDay(state, day) {
-  // console.log("......................................................................", state.days)
-
+  
   const theDay = state.days.find( d => d.name === day)
-  // [4,5,6]
   if(!theDay){
     return []
   }
@@ -11,7 +9,7 @@ export function getAppointmentsForDay(state, day) {
   for(const appointmentId of theDay.appointments){
     result.push(state.appointments[appointmentId])
   }
-  console.log(result)
+  // console.log(result)
   return result
   
 };
@@ -43,3 +41,22 @@ export function getInterview(state, interview) {
 
 
 
+export function getDays(state) {
+  // go thorugh all the days
+  //for each day get all appointment ids
+  //for each appointment id get appointments
+  //for each day, count empty appointments
+  let newDays = [];
+  for (const day of state.days) {
+    let count = 0;
+    for (let appointmentId of day.appointments) {
+      const appointment = state.appointments[appointmentId]
+      let isAppointmentEmpty = appointment.interview === null
+      if (isAppointmentEmpty) {
+        count += 1;
+      }
+    }
+    newDays.push({...day, spot: count})
+  }
+  return newDays;
+}

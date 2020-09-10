@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import axios from "axios"
+import { getAppointmentsForDay } from 'helpers/selectors';
 
 export default function useApplicationData(initial) {
   const [state, setState] = useState({
@@ -21,7 +22,7 @@ export default function useApplicationData(initial) {
       ...state.appointments,
       [id]: appointment
     };
-    console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXx", interview)
+    // console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXx", interview)
     return axios
 
       .put(`http://localhost:8001/api/appointments/${id}`, {interview})
@@ -42,8 +43,9 @@ export default function useApplicationData(initial) {
     return axios
       .delete(`api/appointments/${id}`)
       .then(() => setState({...state, appointments}));
-  };
+  }; 
 
+  
   useEffect(() => {
 
     const first = axios.get(`/api/days`);
