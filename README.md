@@ -22,3 +22,4 @@ npm test
 ```sh
 npm run storybook
 ```
+![Screenshot from 2020-09-11 19-38-26](https://user-images.githubusercontent.com/64504464/92993045-34773000-f4ac-11ea-821c-7c2b5968a931.png)
