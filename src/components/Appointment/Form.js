@@ -18,14 +18,14 @@ export default function Form(props) {
     props.onCancel();
   }
 
-  const save = function (event) {
-    event.preventDefault();
-    console.log("nnnnnnnnnnn", name, interviewer)
-    props.onSave(name, interviewer)
-  }
+  
   function validate() {
     if (name === "") {
       setError("Student name cannot be blank");
+      return;
+    }
+    if (interviewer === null) {
+      setError("Please choose an interviewer");
       return;
     }
     setError("");
