@@ -1,5 +1,6 @@
-# Interview Scheduler
+# Interview Scheduler by Favour
 
+Created as part of the requirement for training as web developer by Lighthouse Labs
 ## Setup
 
 Install dependencies with `npm install`.

@@ -8,8 +8,8 @@ export function getAppointmentsForDay(state, day) {
   for(const appointmentId of theDay.appointments){
     result.push(state.appointments[appointmentId])
   }
-  return result
-  
+  return result;
+    
 };
 
 
