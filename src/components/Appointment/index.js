@@ -109,9 +109,9 @@ export default function Appointment(props) {
         />
       )}
       {mode === ERROR_DELETE && (
-        <Status
+        <Error
           message="Error encountered, could not delete!"
-          onClose={oncancel}
+          onClose={onCancel}
         />
       )}
     </article>
